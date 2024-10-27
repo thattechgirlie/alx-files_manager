@@ -4,14 +4,14 @@ import DBClient from '../utils/db';
 import RedisClient from '../utils/redis';
 
 class AuthController {
-  static async getConnect (request, response) {
+  static async getConnect(request, response) {
     const authorization = request.header('Authorization') || null;
     if (!authorization) return response.status(401).send({ error: 'Unauthorized' });
 
     const buff = Buffer.from(authorization.replace('Basic ', ''), 'base64');
     const credentials = {
       email: buff.toString('utf-8').split(':')[0],
-      password: buff.toString('utf-8').split(':')[1]
+      password: buff.toString('utf-8').split(':')[1],
     };
 
     if (!credentials.email || !credentials.password) return response.status(401).send({ error: 'Unauthorized' });
@@ -28,7 +28,7 @@ class AuthController {
     return response.status(200).send({ token });
   }
 
-  static async getDisconnect (request, response) {
+  static async getDisconnect(request, response) {
     const token = request.header('X-Token') || null;
     if (!token) return response.status(401).send({ error: 'Unauthorized' });
 
