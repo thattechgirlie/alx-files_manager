@@ -5,7 +5,7 @@ import RedisClient from '../utils/redis';
 const { ObjectId } = require('mongodb');
 
 class UsersController {
-  static async postNew (request, response) {
+  static async postNew(request, response) {
     const userEmail = request.body.email;
     if (!userEmail) return response.status(400).send({ error: 'Missing email' });
 
@@ -21,7 +21,7 @@ class UsersController {
     return response.status(201).send({ id: result.insertedId, email: userEmail });
   }
 
-  static async getMe (request, response) {
+  static async getMe(request, response) {
     const token = request.header('X-Token') || null;
     if (!token) return response.status(401).send({ error: 'Unauthorized' });
 

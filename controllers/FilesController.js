@@ -8,7 +8,7 @@ const mime = require('mime-types');
 const Bull = require('bull');
 
 class FilesController {
-  static async postUpload (request, response) {
+  static async postUpload(request, response) {
     const fileQueue = new Bull('fileQueue');
 
     const token = request.header('X-Token') || null;
@@ -43,7 +43,7 @@ class FilesController {
       name: fileName,
       type: fileType,
       isPublic: fileIsPublic,
-      parentId: fileParentId
+      parentId: fileParentId,
     };
 
     if (['folder'].includes(fileType)) {
@@ -54,7 +54,7 @@ class FilesController {
         name: fileDataDb.name,
         type: fileDataDb.type,
         isPublic: fileDataDb.isPublic,
-        parentId: fileDataDb.parentId
+        parentId: fileDataDb.parentId,
       });
     }
 
@@ -79,7 +79,7 @@ class FilesController {
 
     fileQueue.add({
       userId: fileDataDb.userId,
-      fileId: fileDataDb._id
+      fileId: fileDataDb._id,
     });
 
     return response.status(201).send({
@@ -88,11 +88,11 @@ class FilesController {
       name: fileDataDb.name,
       type: fileDataDb.type,
       isPublic: fileDataDb.isPublic,
-      parentId: fileDataDb.parentId
+      parentId: fileDataDb.parentId,
     });
   }
 
-  static async getShow (request, response) {
+  static async getShow(request, response) {
     const token = request.header('X-Token') || null;
     if (!token) return response.status(401).send({ error: 'Unauthorized' });
 
@@ -114,11 +114,11 @@ class FilesController {
       name: fileDocument.name,
       type: fileDocument.type,
       isPublic: fileDocument.isPublic,
-      parentId: fileDocument.parentId
+      parentId: fileDocument.parentId,
     });
   }
 
-  static async getIndex (request, response) {
+  static async getIndex(request, response) {
     const token = request.header('X-Token') || null;
     if (!token) return response.status(401).send({ error: 'Unauthorized' });
 
@@ -148,7 +148,7 @@ class FilesController {
         name: item.name,
         type: item.type,
         isPublic: item.isPublic,
-        parentId: item.parentId
+        parentId: item.parentId,
       };
       filesArray.push(fileItem);
     });
@@ -156,7 +156,7 @@ class FilesController {
     return response.send(filesArray);
   }
 
-  static async putPublish (request, response) {
+  static async putPublish(request, response) {
     const token = request.header('X-Token') || null;
     if (!token) return response.status(401).send({ error: 'Unauthorized' });
 
@@ -180,11 +180,11 @@ class FilesController {
       name: fileDocument.name,
       type: fileDocument.type,
       isPublic: fileDocument.isPublic,
-      parentId: fileDocument.parentId
+      parentId: fileDocument.parentId,
     });
   }
 
-  static async putUnpublish (request, response) {
+  static async putUnpublish(request, response) {
     const token = request.header('X-Token') || null;
     if (!token) return response.status(401).send({ error: 'Unauthorized' });
 
@@ -208,11 +208,11 @@ class FilesController {
       name: fileDocument.name,
       type: fileDocument.type,
       isPublic: fileDocument.isPublic,
-      parentId: fileDocument.parentId
+      parentId: fileDocument.parentId,
     });
   }
 
-  static async getFile (request, response) {
+  static async getFile(request, response) {
     const idFile = request.params.id || '';
     const size = request.query.size || 0;
 
